@@ -2,6 +2,21 @@ from base import *
 from functions import *
 app = create_app()
 
+@login_manager.user_loader
+def load_user(user_id):
+    return User.query.filter_by(id = user_id).first()
+
+def reroute(loginType):
+
+    if loginType == 'Student':
+        return redirect(url_for('studentPage'))
+        
+    elif loginType == 'Teacher':
+        return redirect(url_for('teacherPage'))
+        
+    elif loginType == 'Admin':
+        return redirect(url_for('adminPage'))
+
 @app.route('/',methods = ['GET','POST'])
 def loginPage():
     
@@ -19,22 +34,40 @@ def loginPage():
         elif loginType == 'Admin':
             user = loginAdmin(username,password)
 
+        print(user)
+
         if user == None:
-            print(f"No Such {loginType}")
             return redirect(url_for('loginPage'))
-        else:
-            print(user.uuid)
+
+        
+        login_user(user)
+        return reroute(loginType)
 
     if request.method == 'GET':
-        uuid = request.cookies.get('uuid')
+        
+        # if current_user.is_anonymous == True:
         return render_template('lp1.html')
 
+@app.route('/teacher')
+@login_required(role = 'Teacher')
+def teacherPage():
+
+    return render_template('teacher.html')
+
+@app.route('/logout')
+@login_required(role = 'ANY')
+def logout():
+    logout_user()
+    return redirect(url_for('loginPage'))
+
 @app.route('/student')
+@login_required(role = 'Student')
 def studentPage():
 
-    return getStudents('D',3)[0].name
+    return render_template('student.html')
 
 @app.route('/admin',methods = ['GET','POST'])
+@login_required(role = 'Admin')
 def adminPage():
 
     if request.method == 'POST':

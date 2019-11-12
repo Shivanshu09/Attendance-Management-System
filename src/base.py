@@ -1,6 +1,7 @@
 from flask import *
 from flask_sqlalchemy import SQLAlchemy
-from flask_login import LoginManager
+from flask_login import LoginManager, login_user, logout_user
+import datetime
 
 db = SQLAlchemy()
 login_manager = LoginManager()
@@ -9,7 +10,7 @@ def create_app():
 
     app = Flask(__name__,template_folder='../frontend/html/',static_folder='../frontend/static/css/')
     app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///../data/test.db'
-    
+    app.config['SECRET_KEY'] = '91914023582d45d3ad243d43abaf7e8f'
     db.init_app(app)
     
     login_manager.init_app(app)
@@ -27,16 +28,18 @@ class User(db.Model):
     id = db.Column(db.Integer,primary_key=True)
     pwd = db.Column(db.String())
     role = db.Column(db.String())
-    authenticated = db.Column(db.Boolean, default=False)
 
     def is_active(self):
         return True
 
+    def getRole(self):
+        return self.role
+
     def get_id(self):
-        return self.username
+        return self.id
 
     def is_authenticated(self):
-        return self.authenticated
+        return True
     
     def is_anonymous(self):
         return False
@@ -55,6 +58,7 @@ class Teachers(db.Model):
 
     id = db.Column(db.Integer,primary_key = True)
     classes = db.relationship('Class', secondary = 'teacher_Class_Relationship')
+    subject = db.Column(db.Integer,db.ForeignKey('Subjects.id'))
     name = db.Column(db.String, nullable = False)
 
 class Students(db.Model):
@@ -72,3 +76,20 @@ class teacherClassRelationship(db.Model):
     id = db.Column(db.Integer,primary_key = True)
     teacher_id = db.Column(db.Integer, db.ForeignKey('Teachers.id'))
     class_id = db.Column(db.Integer, db.ForeignKey('Class.id'))
+
+class Subject(db.Model):
+
+    __tablename__ = 'Subjects'
+
+    id = db.Column(db.Integer,primary_key = True)
+    name = db.Column(db.String,nullable = False)
+
+class Attendance(db.Model):
+
+    __tablename__ = 'attendance_record'
+
+    id = db.Column(db.Integer,primary_key = True)
+    student = db.Column(db.Integer, db.ForeignKey('Students.id'))
+    subject = db.Column(db.Integer, db.ForeignKey('Subjects.id'))
+    date = db.Column(db.Date, nullable = False)
+    present = db.Column(db.Boolean,default = False)

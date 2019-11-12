@@ -1,8 +1,31 @@
 from base import db, User, Teachers, Students, Class
+from functools import wraps
+from flask_login import current_user
+from base import login_manager
+
+def login_required(role = 'ANY'):
+
+    def wrapper(fn):
+
+        @wraps(fn)
+
+        def decorated_view(*args,**kwargs):
+
+            if current_user.get_id() == None:
+                return login_manager.unauthorized()
+
+            if current_user.getRole() != role and role != 'ANY':
+                return login_manager.unauthorized()
+            
+            return fn(*args,**kwargs)
+        
+        return decorated_view
+    return wrapper
+
 
 def loginStudent(usrname,pswrd):
     
-    user = User.query.filter_by(username = usrname, pwd = pswrd, authenticated = True).first()
+    user = User.query.filter_by(id = usrname, pwd = pswrd, role = 'Student').first()
 
     if user != None:
         student = Students.query.filter_by(id = user.id).first() 
@@ -12,7 +35,7 @@ def loginStudent(usrname,pswrd):
 
 def loginTeacher(usrname,pswrd):
     
-    user = User.query.filter_by(username = usrname, pwd = pswrd).first()
+    user = User.query.filter_by(id = usrname, pwd = pswrd, role = 'Teacher').first()
 
     if user != None:
         teacher = Teachers.query.filter_by(id = user.id).first() 
@@ -22,7 +45,7 @@ def loginTeacher(usrname,pswrd):
 
 def loginAdmin(usrname,pswrd):
 
-    user = User.query.filter_by(username = usrname, pwd = pswrd).first()
+    user = User.query.filter_by(id = usrname, pwd = pswrd, role = 'Admin').first()
     return user
 
 def createTeacher(name,username,passkey,classes = ''):
