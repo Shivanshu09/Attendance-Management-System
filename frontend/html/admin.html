@@ -2,29 +2,59 @@
 <html lang="en">
 <!-- head started -->
 <head>
-<title>Online Attendance Management System 1.0</title>
-<meta charset="UTF-8">
+<title> Attendance Management System </title>
+<meta name="viewport" content="width=device-width"> <!-- media query -->
 
   <link rel="stylesheet" type="text/css" href="{{url_for('static',filename = 'main.css')}}">
-  <!-- Latest compiled and minified CSS -->
+
+  <link rel="stylesheet" type="text/css" href="/miniprojectams/main.css">
+
+  
+   
+  <!-- Theme -->
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css" >
+
+  <!--  CSS -->
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" >
    
-  <!-- Optional theme -->
-  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css" >
    
-  <!-- <link rel="stylesheet" href="styles.css" > -->
-   
-  <!-- Latest compiled and minified JavaScript -->
-  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
-<!-- <style type="text/css">
+ 
 
-  .message{
-    padding: 10px;
-    font-size: 15px;
-    font-style: bold;
-    color: black;
-  } -->
-</style>
+  <!-- library for jquery wrapper class -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+
+   <!-- Latest compiled and minified JavaScript -->
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+
+  <script src="https://kit.fontawesome.com/a076d05399.js"></script>
+
+<script type="text/javascript">
+$(document).ready(function(){
+    var maxField = 10; //Input fields increment limitation
+    var addButton = $('.add_button'); //Add button selector
+    var wrapper = $('.field_wrapper'); //Input field wrapper
+    var fieldHTML = '<div><input type="text" name="field_name[]" placeholder="Add Semester"/><input type="text" name="field_name[]" placeholder="Add Section"/><a href="javascript:void(0);" class="remove_button"><i class="fa fa-minus" aria-hidden="true"></i></a></div>'; //New input field html 
+    var x = 1; //Initial field counter is 1
+    
+    //Once add button is clicked
+    $(addButton).click(function(){
+        //Check maximum number of input fields
+        if(x < maxField){ 
+            x++; //Increment field counter
+            $(wrapper).append(fieldHTML);
+             //Add field html
+        }
+    });
+    
+    //Once remove button is clicked
+    $(wrapper).on('click', '.remove_button', function(e){
+        e.preventDefault();
+        $(this).parent('div').remove(); //Remove field html
+        x--; //Decrement field counter
+    });
+});
+</script>
+
 </head>
 <!-- head ended -->
 
@@ -34,11 +64,10 @@
     <!-- Menus started-->
     <header>
 
-      <h1>Online Attendance Management System 1.0</h1>
+      <h1 id="mainheading">Attendance Management System</h1>
       <div class="navbar">
-      <a href="">Create Users</a>
-      <a href="">Add Data</a>
-      <a href="">Logout</a>
+      <a href="">Create Users</a> <!-- new signups -->
+      <a href="">Logout</a> <!-- goes back to login page -->
 
     </div>
 
@@ -46,16 +75,11 @@
     <!-- Menus ended -->
 
 <center>
-<!-- Error or Success Message printint started -->
-<div class="message">
-
-</div>
-<!-- Error or Success Message printint ended -->
 
 <!-- Content, Tables, Forms, Texts, Images started -->
 <div class="content">
 
-  <center> Select: <a href="#teacher">Teacher</a> | <a href="">Student</a> <br></center>
+  <center> Select: <a href="#teacher">Teacher</a> | <a href="#student">Student</a> | <a href="#class">Class</a><br></center>
 
   <div class="rowtwo" id="student">
 
@@ -111,7 +135,7 @@
 
   <div class="rowtwo" id="teacher">
 
-       <form method="post" class="form-horizontal col-md-6 col-md-offset-3">
+    <form method="post" class="form-horizontal col-md-6 col-md-offset-3">
         <h4>Add Teacher's Information</h4>
       <div class="form-group">
           <label for="input1" class="col-sm-3 control-label">Teacher ID</label>
@@ -127,12 +151,7 @@
           </div>
       </div>
 
-      <!-- <div class="form-group">
-          <label for="input1" class="col-sm-3 control-label">Department</label>
-          <div class="col-sm-7">
-            <input type="text" name="tc_dept"  class="form-control" id="input1" placeholder="department ex. CSE" />
-          </div>
-      </div> -->
+
 
       <div class="form-group">
           <label for="input1" class="col-sm-3 control-label">Email</label>
@@ -147,8 +166,31 @@
             <input type="text" name="tc_course"  class="form-control" id="input1" placeholder="course ex. Software Engineering" />
           </div>
       </div>
+      
 
-      <input type="submit" name = "submit_button" class="btn btn-primary col-md-2 col-md-offset-8" value="Add Teacher" name="tcr" />
+    
+    <div class="field_wrapper">
+      <div>
+        <input type="text" name="field_name[]" placeholder="Add Semester"/>
+        
+        <input type="text" name="field_name[]" placeholder="Add Section"/>
+      </div>
+        <a href="javascript:void(0);" class="add_button" title="Add field"><i class="fa fa-plus" aria-hidden="true" style="
+    border-top-width: 0px;
+    margin-top: 0px;
+"></i></a>
+      </div>
+    </div>
+    
+
+
+
+
+
+   <input type="submit" name="submit_button" class="btn btn-primary col-md-2 col-md-offset-8" value="Add Teacher" style="
+    top: 10px;
+
+">
     </form>
 
   </div>
