@@ -51,6 +51,7 @@ class Class(db.Model):
     id = db.Column(db.Integer,primary_key = True)
     section = db.Column(db.String,nullable = False)
     semester = db.Column(db.String, nullable = False)
+    subjects = db.relationship('Subject', secondary = 'subject_Class_Relationship')
 
 class Teachers(db.Model):
 
@@ -65,7 +66,7 @@ class Students(db.Model):
 
     __tablename__ = 'Students'
     id = db.Column(db.Integer,primary_key = True)
-    classroom_id = db.Column(db.Integer, db.ForeignKey('Class.id'))
+    classroom_id = db.Column(db.Integer, db.ForeignKey('Class.id', ondelete = 'CASCADE'))
     classroom = db.relationship('Class',backref = db.backref('classStudents',lazy = True))
     name = db.Column(db.String, nullable = False)
 
@@ -74,8 +75,8 @@ class teacherClassRelationship(db.Model):
     __tablename__ = 'teacher_Class_Relationship'
 
     id = db.Column(db.Integer,primary_key = True)
-    teacher_id = db.Column(db.Integer, db.ForeignKey('Teachers.id'))
-    class_id = db.Column(db.Integer, db.ForeignKey('Class.id'))
+    teacher_id = db.Column(db.Integer, db.ForeignKey('Teachers.id',ondelete = 'CASCADE'))
+    class_id = db.Column(db.Integer, db.ForeignKey('Class.id',ondelete = 'CASCADE'))
 
 class Subject(db.Model):
 
@@ -89,7 +90,15 @@ class Attendance(db.Model):
     __tablename__ = 'attendance_record'
 
     id = db.Column(db.Integer,primary_key = True)
-    student = db.Column(db.Integer, db.ForeignKey('Students.id'))
-    subject = db.Column(db.Integer, db.ForeignKey('Subjects.id'))
+    student = db.Column(db.Integer, db.ForeignKey('Students.id',ondelete = 'CASCADE'))
+    subject = db.Column(db.Integer, db.ForeignKey('Subjects.id',ondelete = 'CASCADE'))
     date = db.Column(db.Date, nullable = False)
     present = db.Column(db.Boolean,default = False)
+
+class subjectClassRelationship(db.Model):
+
+    __tablename__ = 'subject_Class_Relationship'
+
+    id = db.Column(db.Integer,primary_key = True)
+    subject_id = db.Column(db.Integer, db.ForeignKey('Subjects.id',ondelete = 'CASCADE'))
+    class_id = db.Column(db.Integer, db.ForeignKey('Class.id',ondelete = 'CASCADE'))

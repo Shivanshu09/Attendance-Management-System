@@ -73,7 +73,7 @@ def adminPage():
     if request.method == 'POST':
 
         if request.form['submit_button'] == "Add Teacher":
-            print(request.form)
+            createTeacher(request.form)
 
         elif request.form['submit_button'] == "Add Student":
             

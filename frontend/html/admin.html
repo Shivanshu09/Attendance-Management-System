@@ -33,7 +33,9 @@ $(document).ready(function(){
     var maxField = 10; //Input fields increment limitation
     var addButton = $('.add_button'); //Add button selector
     var wrapper = $('.field_wrapper'); //Input field wrapper
-    var fieldHTML = '<div><input type="text" name="field_name[]" placeholder="Add Semester"/><input type="text" name="field_name[]" placeholder="Add Section"/><a href="javascript:void(0);" class="remove_button"><i class="fa fa-minus" aria-hidden="true"></i></a></div>'; //New input field html 
+    var fieldHTML1 = '<div><input type="text" name="Semester_name'; //New input field html 
+    var fieldHTML2 = '" placeholder="Add Semester"/><input type="text" name="Section_name'
+    var fieldHTML3 =  '" placeholder="Add Section"/><a href="javascript:void(0);" class="remove_button"><i class="fa fa-minus" aria-hidden="true"></i></a></div>'
     var x = 1; //Initial field counter is 1
     
     //Once add button is clicked
@@ -41,7 +43,7 @@ $(document).ready(function(){
         //Check maximum number of input fields
         if(x < maxField){ 
             x++; //Increment field counter
-            $(wrapper).append(fieldHTML);
+            $(wrapper).append(fieldHTML1 + x + fieldHTML2 + x + fieldHTML3);
              //Add field html
         }
     });
@@ -151,6 +153,12 @@ $(document).ready(function(){
           </div>
       </div>
 
+      <div class="form-group">
+        <label for="input1" class="col-sm-3 control-label">Password</label>
+        <div class="col-sm-7">
+          <input type="password" name="tc_pass"  class="form-control" id="input1" placeholder="Password" />
+        </div>
+    </div>
 
 
       <div class="form-group">
@@ -171,9 +179,9 @@ $(document).ready(function(){
     
     <div class="field_wrapper">
       <div>
-        <input type="text" name="field_name[]" placeholder="Add Semester"/>
+        <input type="text" name="Semester_name1" placeholder="Add Semester"/>
         
-        <input type="text" name="field_name[]" placeholder="Add Section"/>
+        <input type="text" name="Section_name1" placeholder="Add Section"/>
       </div>
         <a href="javascript:void(0);" class="add_button" title="Add field"><i class="fa fa-plus" aria-hidden="true" style="
     border-top-width: 0px;
