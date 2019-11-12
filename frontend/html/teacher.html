@@ -1,15 +1,16 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<title>Online Attendance Management System 1.0</title>
+<title>Attendance Management System</title>
 <meta charset="UTF-8">
+<<meta name="viewport" content="width=device-width, initial-scale=1.0"> <!-- media query -->
 
   <link rel="stylesheet" type="text/css" href="{{url_for('static',filename = 'main.css')}}">
   <!-- Latest compiled and minified CSS -->
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" >
    
   <!-- Optional theme -->
-  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css" >
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css">
    
   <!-- <link rel="stylesheet" href="styles.css" > -->
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
@@ -36,9 +37,9 @@
 <header>
 
   <h1 id="mainheading"> Attendance Management System </h1>
- 	<div class="navbar">
-  	 <a href="/logout">Logout</a>
-	</div>
+  <div class="navbar">
+     <a href="/logout">Logout</a>
+  </div>
 
 </header>
 
@@ -55,14 +56,14 @@
    <form action="" method="post" class="form-horizontal col-md-6 col-md-offset-3">
 
     <center>
-    	<div class="md-form">
- 			<input placeholder="Selected date" type="text" id="date-picker-example" class="form-control datepicker">
-  			<label for="date-picker-example">Select Date</label>
-		</div>
-	</center>
+      <div class="md-form">
+      <input placeholder="Selected date" type="text" id="date-picker-example" class="form-control datepicker">
+        <label for="date-picker-example">Select Date</label>
+    </div>
+  </center>
     <div class="form-group">
 
-    	<label>Select Semester</label>
+      <label>Select Semester</label>
                 
         <select name="whichSemester" id="input1">
 
@@ -97,13 +98,13 @@
         </tr>
       </thead>
    
-  	 <tbody id = "tableBody"></tbody>
-  	
+     <tbody id = "tableBody"></tbody>
+    
 
     </table>
 
     <center><br>
-    	<input type="submit" class="btn btn-primary col-md-2 col-md-offset-10" value="Upload" name="att" />
+      <input type="submit" class="btn btn-primary col-md-2 col-md-offset-10" value="Upload" name="att" />
     </center>
 
    </form>
