@@ -1,0 +1,186 @@
+<!DOCTYPE html>
+<html lang="en">
+<!-- head started -->
+<head>
+<title>Online Attendance Management System 1.0</title>
+<meta charset="UTF-8">
+
+  <link rel="stylesheet" type="text/css" href="{{url_for('static',filename = 'main.css')}}">
+  <!-- Latest compiled and minified CSS -->
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" >
+   
+  <!-- Optional theme -->
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css" >
+   
+  <!-- <link rel="stylesheet" href="styles.css" > -->
+   
+  <!-- Latest compiled and minified JavaScript -->
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+<!-- <style type="text/css">
+
+  .message{
+    padding: 10px;
+    font-size: 15px;
+    font-style: bold;
+    color: black;
+  } -->
+</style>
+</head>
+<!-- head ended -->
+
+<!-- body started -->
+<body>
+
+    <!-- Menus started-->
+    <header>
+
+      <h1>Online Attendance Management System 1.0</h1>
+      <div class="navbar">
+      <a href="">Create Users</a>
+      <a href="">Add Data</a>
+      <a href="">Logout</a>
+
+    </div>
+
+    </header>
+    <!-- Menus ended -->
+
+<center>
+<!-- Error or Success Message printint started -->
+<div class="message">
+
+</div>
+<!-- Error or Success Message printint ended -->
+
+<!-- Content, Tables, Forms, Texts, Images started -->
+<div class="content">
+
+  <center> Select: <a href="#teacher">Teacher</a> | <a href="">Student</a> <br></center>
+
+  <div class="rowtwo" id="student">
+
+      <form method="post" class="form-horizontal col-md-6 col-md-offset-3">
+      <h4>Add Student's Information</h4>
+      <div class="form-group">
+          <label for="input1" class="col-sm-3 control-label">Student ID</label>
+          <div class="col-sm-7">
+            <input type="text" name="st_id"  class="form-control" id="input1" placeholder="student id" />
+          </div>
+      </div>
+
+      <div class="form-group">
+          <label for="input1" class="col-sm-3 control-label">Name</label>
+          <div class="col-sm-7">
+            <input type="text" name="st_name"  class="form-control" id="input1" placeholder="student full name" />
+          </div>
+      </div>
+
+      <div class="form-group">
+          <label for="input1" class="col-sm-3 control-label">Password</label>
+          <div class="col-sm-7">
+            <input type="password" name="st_password"  class="form-control" id="input1" placeholder="Password" />
+          </div>
+      </div>
+
+      <div class="form-group">
+          <label for="input1" class="col-sm-3 control-label">Section</label>
+          <div class="col-sm-7">
+            <input type="text" name="st_section"  class="form-control" id="input1" placeholder="batch e.x 38" />
+          </div>
+      </div>
+
+      <div class="form-group">
+          <label for="input1" class="col-sm-3 control-label">Semester</label>
+          <div class="col-sm-7">
+            <input type="text" name="st_sem"  class="form-control" id="input1" placeholder="semester ex. Fall-15" />
+          </div>
+      </div>
+
+      <div class="form-group">
+          <label for="input1" class="col-sm-3 control-label">Email</label>
+          <div class="col-sm-7">
+            <input type="email" name="st_email"  class="form-control" id="input1" placeholder="valid email" />
+          </div>
+      </div>
+
+
+      <input type="submit" name = "submit_button" class="btn btn-primary col-md-2 col-md-offset-8" value="Add Student" name="std" />
+    </form>
+    <br><br><br>
+  </div>
+
+  <div class="rowtwo" id="teacher">
+
+       <form method="post" class="form-horizontal col-md-6 col-md-offset-3">
+        <h4>Add Teacher's Information</h4>
+      <div class="form-group">
+          <label for="input1" class="col-sm-3 control-label">Teacher ID</label>
+          <div class="col-sm-7">
+            <input type="text" name="tc_id"  class="form-control" id="input1" placeholder="teacher's id" />
+          </div>
+      </div>
+
+      <div class="form-group">
+          <label for="input1" class="col-sm-3 control-label">Name</label>
+          <div class="col-sm-7">
+            <input type="text" name="tc_name"  class="form-control" id="input1" placeholder="teacher full name" />
+          </div>
+      </div>
+
+      <!-- <div class="form-group">
+          <label for="input1" class="col-sm-3 control-label">Department</label>
+          <div class="col-sm-7">
+            <input type="text" name="tc_dept"  class="form-control" id="input1" placeholder="department ex. CSE" />
+          </div>
+      </div> -->
+
+      <div class="form-group">
+          <label for="input1" class="col-sm-3 control-label">Email</label>
+          <div class="col-sm-7">
+            <input type="email" name="tc_email"  class="form-control" id="input1" placeholder="valid email" />
+          </div>
+      </div>
+
+      <div class="form-group">
+          <label for="input1" class="col-sm-3 control-label">Course Name</label>
+          <div class="col-sm-7">
+            <input type="text" name="tc_course"  class="form-control" id="input1" placeholder="course ex. Software Engineering" />
+          </div>
+      </div>
+
+      <input type="submit" name = "submit_button" class="btn btn-primary col-md-2 col-md-offset-8" value="Add Teacher" name="tcr" />
+    </form>
+
+  </div>
+
+  <div class="rowtwo" id="class">
+
+      <form method="post" class="form-horizontal col-md-6 col-md-offset-3">
+       <h4>Add Class</h4>
+
+     <div class="form-group">
+         <label for="input1" class="col-sm-3 control-label">Semester</label>
+         <div class="col-sm-7">
+           <input type="text" name="tc_semester"  class="form-control" id="input1" placeholder="Ex. 3" />
+         </div>
+     </div>
+
+     <div class="form-group">
+         <label for="input1" class="col-sm-3 control-label">Section</label>
+         <div class="col-sm-7">
+           <input type="text" name="tc_section"  class="form-control" id="input1" placeholder="Ex. D" />
+         </div>
+     </div>
+
+     <input type="submit" name = "submit_button" class="btn btn-primary col-md-2 col-md-offset-8" value="Add Class" name="tcr" />
+   </form>
+
+ </div>
+
+</div><br>
+<!-- Contents, Tables, Forms, Images ended -->
+
+</center>
+</body>
+<!-- Body ended  -->
+</html>
