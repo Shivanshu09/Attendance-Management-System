@@ -2,6 +2,7 @@ from base import db, User, Teachers, Students, Class, Subject
 from functools import wraps
 from flask_login import current_user
 from base import login_manager
+import json
 
 def login_required(role = 'ANY'):
 
@@ -28,9 +29,9 @@ def loginStudent(usrname,pswrd):
 
     if user != None:
         student = Students.query.filter_by(id = user.id).first() 
-        return user,student
+        return user
 
-    return None,None
+    return None
 
 def loginTeacher(usrname,pswrd):
     
@@ -38,9 +39,9 @@ def loginTeacher(usrname,pswrd):
 
     if user != None:
         teacher = Teachers.query.filter_by(id = user.id).first() 
-        return user,teacher
+        return user
 
-    return None,None
+    return None
 
 def loginAdmin(usrname,pswrd):
 
@@ -104,4 +105,19 @@ def createSubject(subject):
 
 def getStudents(sec, sem):
     clssroom = Class.query.filter_by(section = sec, semester = sem).first()
-    return clssroom.classStudents
+
+    classStudents = clssroom.classStudents
+    students = {}
+    stlist = []
+
+    for student in classStudents:
+
+        stdict = {
+            'id': student.id,
+            'name': student.name
+        }
+        stlist.append(stdict)
+
+    students['students'] = stlist
+
+    return students

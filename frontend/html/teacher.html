@@ -12,10 +12,11 @@
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css" >
    
   <!-- <link rel="stylesheet" href="styles.css" > -->
-   
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
   <!-- Latest compiled and minified JavaScript -->
   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
 
+  <script src="{{url_for('static',filename = 'main.js')}}"></script> 
 
 <style type="text/css">
   .status{
@@ -47,7 +48,7 @@
 <div class="row">
 
   <div class="content">
-    <h3>Attendance of </h3>
+    <h3>Attendance of {{subject}} by {{name}}</h3>
     <br>
 
     <center><p></p></center> 
@@ -56,60 +57,48 @@
 
      <div class="form-group">
 
-                <label>Select Batch</label>
+                <label>Select Semester</label>
                 
-                <select name="whichbatch" id="input1">
-                      <option name="eight" value="38">38</option>
-                      <option name="seven" value="37">37</option>
+                <select name="whichSemester" id="input1">
+                      {% for class in classes %}
+                      <option name="cl_opt" value="{{class.semester}}">{{class.semester}}</option>
+                      {% endfor %}
+                  </select>
+                <label>Select Section</label>
+                <select name="whichSection" id="input2">
+                  {% for class in classes %}
+                  <option name="cl_opt" value="{{class.section}}">{{class.section}}</option>
+                  {% endfor %}
                 </select>
               </div>
                
-     <input type="submit" class="btn btn-primary col-md-2 col-md-offset-5" value="Show!" name="batch" />
+     <input class="btn btn-primary col-md-2 col-md-offset-5" value="Show!" id = 'submitButton' name="batch" />
 
     </form>
 
     <div class="content"></div>
     <form action="" method="post">
 
-      <div class="form-group">
-
-        <label >Select Course</label>
-              <select name="whichcourse" id="input1">
-                 <option name="networking" value="networking">Computer Networks</option>
-                <option name="swe" value="swe">Software Engineering</option>
-              </select>
-
-      </div>
-
     <table class="table table-stripped">
       <thead>
         <tr>
           <th scope="col">ID</th>
           <th scope="col">Name</th>
-          <th scope="col">Department</th>
-          <th scope="col">Batch</th>
-          <th scope="col">Semester</th>
-          <th scope="col">Email</th>
           <th scope="col">Status</th>
         </tr>
       </thead>
    
-  <body>
+  <tbody id = "tableBody">
      <tr>
-       <td> <input type="hidden" name="stat_id[]" value="<?php echo $data['st_id']; ?>"> </td>
+       <td> <input type="hidden" name="stat_id[]" value=""> </td>
        <td></td>
        <td></td>
        <td></td>
        <td></td>
        <td></td>
-       <td>
-         <label>Present</label>
-         <input type="radio" name="" value="Present" checked>
-         <label>Absent </label>
-         <input type="radio" name="" value="Absent">
-       </td>
+       
      </tr>
-  </body>
+  </tbody>
 
     </table>
 

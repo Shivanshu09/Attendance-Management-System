@@ -26,10 +26,10 @@ def loginPage():
         loginType = request.form['type']
 
         if loginType == 'Student':
-            user,student = loginStudent(username,password)
+            user = loginStudent(username,password)
 
         elif loginType == 'Teacher':
-            user,teacher = loginTeacher(username,password)
+            user = loginTeacher(username,password)
 
         elif loginType == 'Admin':
             user = loginAdmin(username,password)
@@ -52,7 +52,9 @@ def loginPage():
 @login_required(role = 'Teacher')
 def teacherPage():
 
-    return render_template('teacher.html')
+    teacher = Teachers.query.filter_by(id = current_user.get_id()).first()
+    subject = Subject.query.filter_by(id = teacher.subject).first().name
+    return render_template('teacher.html',classes = teacher.classes,name = teacher.name,subject = subject)
 
 @app.route('/logout')
 @login_required(role = 'ANY')
@@ -93,6 +95,18 @@ def adminPage():
             createClass(sec, sem)
 
     return render_template('admin.html')
+
+@app.route('/getStudents',methods = ['POST'])
+@login_required(role = 'Teacher')
+def studentList():
+
+    if request.method == 'POST':
+        sem = request.json['semester']
+        sec = request.json['section']
+        
+    return jsonify(getStudents(sec,sem))
+
+
 
 if __name__ == '__main__':
     app.run(debug = True)
