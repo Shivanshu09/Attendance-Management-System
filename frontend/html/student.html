@@ -5,18 +5,23 @@
 <head>
 <title>Online Attendance Management System 1.0</title>
 <meta charset="UTF-8">
-  <link rel="stylesheet" type="text/css" href="{{url_for('static',filename = 'main.css')}}">
-  <!-- Latest compiled and minified CSS -->
-  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" >
-   
-  <!-- Optional theme -->
-  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css" >
-   
-  <link rel="stylesheet" href="styles.css" >
-   
-  <!-- Latest compiled and minified JavaScript -->
-  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+<link rel="stylesheet" type="text/css" href="{{url_for('static',filename = 'main.css')}}">
+<!-- Latest compiled and minified CSS -->
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" >
+ 
+<!-- Optional theme -->
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css">
+ 
+<!-- <link rel="stylesheet" href="styles.css" > -->
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
 
+<!-- Latest compiled and minified JavaScript -->
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+
+<!-- Connection for js file used for table contents-->
+<script src="{{url_for('static',filename = 'main.js')}}"></script> 
+
+<script src="//code.jquery.com/ui/1.11.4/jquery-ui.js"></script>
 </head>
 <!-- head ended -->
 
@@ -29,9 +34,6 @@
   <h1>Online Attendance Management System 1.0</h1>
   <div class="navbar">
   <a href="">Home</a>
-  <a href="">Students</a>
-  <a href="">My Report</a>
-  <a href="">My Account</a>
   <a href="/logout">Logout</a>
 
 </div>
@@ -42,40 +44,23 @@
 <center>
 
 <!-- Content, Tables, Forms, Texts, Images started -->
-<div class="row">
-
-  <div class="content">
-    <h3>Student Report</h3>
-    <br>
-    <form method="post" action="" class="form-horizontal col-md-6 col-md-offset-3">
-
-  <div class="form-group">
-
-    <label  for="input1" class="col-sm-3 control-label">Select Course</label>
-      <div class="col-sm-4">
-      <select name="whichcourse" id="input1">
-         <option name="networking" value="networking">Computer Networks</option>
-        <option name="swe" value="swe">Software Engineering</option>
-      </select>
-      </div>
-
-  </div>
-
-        <div class="form-group">
-           <label for="input1" class="col-sm-3 control-label">Your ID</label>
-              <div class="col-sm-7">
-                  <input type="text" name="sr_id"  class="form-control" id="input1" placeholder="enter your id" />
-              </div>
-        </div>
-        <input type="submit" class="btn btn-primary col-md-3 col-md-offset-7" value="Go!" name="sr_btn" />
-    </form>
-
-    <div class="content"><br></div>
-
-    <form method="post" action="" class="form-horizontal col-md-6 col-md-offset-3">
-    
-  </form>
-  </div>
+<div class="row" style="padding-left: 40px;">
+<table class="table table-stripped" >
+  <thead >
+    <tr>
+      <th scope="col" > Subject</th>
+      <th scope="col">Attendance</th>
+    </tr>
+  </thead>
+   <tbody>
+    {% for item in items %}
+    <tr>
+      <td class = "sub">{{item.subject}}</td>
+      <td class = "att">{{item.attendance}}</td> 
+    </tr>
+   {% endfor %}
+</tbody>
+</table>
 
 </div>
 <!-- Contents, Tables, Forms, Images ended -->

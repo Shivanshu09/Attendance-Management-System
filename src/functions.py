@@ -1,8 +1,9 @@
-from base import db, User, Teachers, Students, Class, Subject
+from base import db, User, Teachers, Students, Class, Subject, Attendance
 from functools import wraps
 from flask_login import current_user
 from base import login_manager
 import json
+from datetime import datetime
 
 def login_required(role = 'ANY'):
 
@@ -119,5 +120,46 @@ def getStudents(sec, sem):
         stlist.append(stdict)
 
     students['students'] = stlist
-
     return students
+
+def addAttendance(data,id):
+
+    sub_id = Teachers.query.filter_by(id = id).first().subject
+
+    students = data['students']
+
+    for student in students:
+
+        date = datetime.strptime(data['date'],"%Y-%m-%d").date()
+        # print(student['id'])
+        std_id = int(student['id'])
+        newAttend = Attendance(date = date, student = std_id,subject = sub_id,present = student['present'])
+        db.session.add(newAttend)
+    
+    db.session.commit()
+    
+def getStudentAttendance(id):
+
+    classroom = Students.query.filter_by(id = id).first().classroom_id
+    subjects = Class.query.filter_by(id = classroom).first().subjects
+
+    subs = []
+
+    for subject in subjects:
+        subject_name = subject.name
+       
+        total = len(Attendance.query.filter_by(student = id, subject = subject.id).all())
+        present = len(Attendance.query.filter_by(student = id, subject = subject.id, present = 1).all())
+        
+        if total == 0:
+            pct = 'NA'
+
+        else:
+            pct = present*100/total
+
+        subs.append({
+            'subject':subject_name,
+            'attendance':pct
+        })
+
+    return subs

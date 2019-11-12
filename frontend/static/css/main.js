@@ -4,7 +4,7 @@ function createTable(data)
     students = data.students;
     table = document.getElementById('tableBody')
     // var button = '<td><label>Present</label><input type="radio" name="set_status" value="Present" checked><label>Absent </label><input type="radio" name="set_status" value="Absent"></td>'
-    var button = '<td><input type="checkbox"></td>' 
+    var button = '<td name = "chck"><input  type="checkbox"></td>' 
 
     table.innerHTML = "";
     for(var i = 0;i<students.length;i++)
@@ -21,6 +21,7 @@ function createTable(data)
         trow.innerHTML += button
         table.append(trow)
     }
+
 }
 
 function getClassData()
@@ -44,6 +45,8 @@ function getClassData()
 
 function getAttendanceData()
 {
+    var sem = parseInt($('#input1').val());
+    var sec = $('#input2').val();
     trows = document.getElementsByTagName("tbody")[0].getElementsByTagName("tr");
     var students = [];
     var attend = {};
@@ -54,9 +57,9 @@ function getAttendanceData()
         for(var j = 0;j<tds.length;j++)
         {
             
-            if (tds[j].getAttribute("name") == "id")
+            if (tds[j].getAttribute("name").localeCompare("id") == 0)
             {
-                user['id'] = tds[i].innerText;
+                user['id'] = tds[j].innerText;
             }
         }
 
@@ -72,20 +75,25 @@ function getAttendanceData()
         students.push(user);
     }
     attend['students'] = students;
+    attend['date'] = $('#date-picker').val()
+    attend['semester'] = sem
+    attend['section'] = sec
     return attend;
 }
 
 function postAttendanceData()
 {
     data = getAttendanceData()
-
+    console.log("POST")
     $.ajax({
         url: '/markattendance',
         type: 'post',
         dataType: 'json',
         contentType: 'application/json',
-        success: createTable,
-        data: JSON.stringify(classroom)
+        success: function(){
+            alert("Succesfully Saved")
+        },
+        data: JSON.stringify(data)
     });
 }
 

@@ -66,7 +66,8 @@ def logout():
 @login_required(role = 'Student')
 def studentPage():
 
-    return render_template('student.html')
+    data = getStudentAttendance(current_user.get_id())
+    return render_template('student.html',items = data)
 
 @app.route('/admin',methods = ['GET','POST'])
 @login_required(role = 'Admin')
@@ -106,6 +107,14 @@ def studentList():
         
     return jsonify(getStudents(sec,sem))
 
+@app.route('/markattendance',methods = ['POST'])
+@login_required(role = 'Teacher')
+def markAttendance():
+
+    if request.method == 'POST':
+        # print(request.json)
+        addAttendance(request.json,current_user.get_id())
+        return redirect(url_for('teacherPage'))
 
 
 if __name__ == '__main__':

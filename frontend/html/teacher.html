@@ -3,7 +3,7 @@
 <head>
 <title>Attendance Management System</title>
 <meta charset="UTF-8">
-<<meta name="viewport" content="width=device-width, initial-scale=1.0"> <!-- media query -->
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 
   <link rel="stylesheet" type="text/css" href="{{url_for('static',filename = 'main.css')}}">
   <!-- Latest compiled and minified CSS -->
@@ -21,8 +21,10 @@
   <!-- Connection for js file used for table contents-->
   <script src="{{url_for('static',filename = 'main.js')}}"></script> 
 
+  <script src="//code.jquery.com/ui/1.11.4/jquery-ui.js"></script>
+
   <!-- Date picker -->
-  <script>$('.datepicker').pickadate();</script>
+  <!-- <script>$('.datepicker').pickadate();</script> -->
 
 <style type="text/css">
   .status{
@@ -53,13 +55,12 @@
 
  
     
-   <form action="" method="post" class="form-horizontal col-md-6 col-md-offset-3">
+   <form class="form-horizontal col-md-6 col-md-offset-3">
 
     <center>
-      <div class="md-form">
-      <input placeholder="Selected date" type="text" id="date-picker-example" class="form-control datepicker">
-        <label for="date-picker-example">Select Date</label>
-    </div>
+      <label> Date </label>
+      <input type = "date" id="date-picker">
+        
   </center>
     <div class="form-group">
 
@@ -68,7 +69,7 @@
         <select name="whichSemester" id="input1">
 
         {% for class in classes %}
-        <option name="cl_opt" value="{{class.semester}}">Select Semester</option>
+        <option name="cl_opt" value="{{class.semester}}">{{class.semester}}</option>
         {% endfor %}
 
         </select>
@@ -76,13 +77,13 @@
         <label>Select Section</label>
             <select name="whichSection" id="input2">
             {% for class in classes %}
-            <option name="cl_opt" value="{{class.section}}">Select Class</option>
+            <option name="cl_opt" value="{{class.section}}">{{class.section}}</option>
             {% endfor %}
 
         </select>
     </div>
                
-    <input class="btn btn-primary col-md-2 col-md-offset-5" value="Open Register" id = 'submitButton' name="batch" />
+    <button type = "button" class="btn btn-primary " value="Open Register" id = 'submitButton' name="batch" />Open Register</button>
 
    </form>
 
@@ -104,7 +105,7 @@
     </table>
 
     <center><br>
-    <input id="save" class="btn btn-primary col-md-2 col-md-offset-10" value="Save!" name="att" />
+    <button type = "button" id = "save" class="btn btn-primary " value="Save!" name="att">Save</button>
   </center>
 
    </form>
